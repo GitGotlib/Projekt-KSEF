@@ -67,6 +67,7 @@ class InvoiceItemResponse(BaseModel):
 
 
 class InvoiceCreate(BaseModel):
+    client_id: int
     invoice_number: str
     invoice_date: date
     sale_date: Optional[date] = None
