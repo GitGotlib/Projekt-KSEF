@@ -6,6 +6,8 @@ def validate_nip(value: str) -> str:
     nip = value.replace("-", "").replace(" ", "")
     if not nip.isdigit() or len(nip) != 10:
         raise ValueError("NIP musi składać się z dokładnie 10 cyfr")
+    if nip == "0" * 10:
+        raise ValueError("NIP nie może składać się z samych zer")
 
     weights = [6, 5, 7, 2, 3, 4, 5, 6, 7]
     checksum = sum(int(nip[i]) * weights[i] for i in range(9)) % 11

@@ -164,9 +164,7 @@ def _build_fa(root: etree._Element, invoice: Invoice) -> None:
     _e(fa, "RodzajFaktury", rodz_map.get(invoice.invoice_type or "VAT", "VAT"))
 
     # ---- Termin i metoda płatności ----
-    if invoice.payment_method:
-        _e(fa, "TerminPlatnosci")  # placeholder – pełna obsługa poniżej
-        fa.remove(fa[-1])  # usuń placeholder, obsłuż właściwie
+    if invoice.payment_method or invoice.payment_due_date or invoice.bank_account:
         _build_platnosc(fa, invoice)
 
     # ---- Pozycje faktury ----
@@ -185,7 +183,7 @@ def _build_vat_totals(fa: etree._Element, invoice: Invoice) -> None:
 
     if invoice.items:
         for item in invoice.items:
-            rate_str = str(int(Decimal(str(item.vat_rate or "23")))).rstrip(".0") or "23"
+            rate_str = str(int(Decimal(str(item.vat_rate or "23"))))
             field_idx = _VAT_RATE_FIELD.get(rate_str, 1)  # default → 23%
             totals_netto[field_idx] = totals_netto.get(field_idx, Decimal("0")) + Decimal(
                 str(item.net_amount or "0")
