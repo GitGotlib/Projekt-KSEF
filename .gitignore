@@ -37,3 +37,16 @@ generated/
 # OS
 .DS_Store
 Thumbs.db
+
+# Tymczasowe skrypty debugowania
+_*.py
+
+# Wygenerowane dokumenty PDF (regenerowalne z .md)
+*.pdf
+
+# Zdjęcia / screenshoty
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
